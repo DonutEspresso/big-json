@@ -1,0 +1,41 @@
+{
+  "name": "big-json",
+  "version": "0.0.0",
+  "main": "lib/index.js",
+  "description": "A stream based implementation of JSON.parse and JSON.stringify for big POJOs",
+  "homepage": "https://github.com/DonutEspresso/big-json",
+  "author": {
+    "name": "Alex Liu",
+    "email": "donutespresso@gmail.com"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git@github.com:DonutEspresso/big-json.git"
+  },
+  "license": "MIT",
+  "files": [
+    "lib"
+  ],
+  "keywords": [
+    "big-json",
+    "json",
+    "streams",
+    "parse",
+    "stringify"
+  ],
+  "devDependencies": {
+    "chai": "^4.1.2",
+    "coveralls": "^2.13.1",
+    "eslint": "^4.5.0",
+    "istanbul": "^0.4.5",
+    "jscs": "^3.0.7",
+    "mocha": "^3.5.0",
+    "nsp": "^2.7.0"
+  },
+  "dependencies": {
+    "assert-plus": "^1.0.0",
+    "json-stream-stringify": "^1.5.1",
+    "stream-json": "^0.5.2",
+    "through2": "^2.0.3"
+  }
+}

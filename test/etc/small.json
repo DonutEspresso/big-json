@@ -1,0 +1,15 @@
+{
+    "artist": "The Beatles",
+    "album": "Sgt Pepper Lonely Hearts Club Band",
+    "year": 1967,
+    "genre": "Rock",
+    "tracks": [
+        {
+            "name": "Sgt Pepper's Lonely Hearts Club Band"
+        },
+        {
+            "name": "With A Little Help From My Friends"
+        }
+    ],
+    "comments": "What I can't even"
+}
