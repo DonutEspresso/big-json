@@ -7,6 +7,8 @@ const stream = require('stream');
 
 // external modules
 const assert = require('chai').assert;
+const isStream = require('is-stream');
+
 
 // local files
 const json = require('../lib');
@@ -24,13 +26,13 @@ describe('big-json', function() {
             });
 
             assert.ok(stringifyStream);
-            assert.isFunction(stringifyStream.on);
+            assert.isTrue(isStream(stringifyStream));
 
             return done();
         });
 
 
-        it('should return a string on stream end', function(done) {
+        it('should emit JSON string on data event', function(done) {
             const stringifyStream = json.createStringifyStream({
                 body: POJO
             });
@@ -57,7 +59,7 @@ describe('big-json', function() {
             const parseStream = json.createParseStream();
 
             assert.ok(parseStream);
-            assert.isFunction(parseStream.on);
+            assert.isTrue(isStream(parseStream));
 
             return done();
         });
