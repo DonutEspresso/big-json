@@ -585,9 +585,7 @@ if (ACTION === 'generate') {
     md.verify();
 } else if (ACTION === 'release') {
     const commits = git.getNewCommits();
-    console.warn(commits);
     const categorizedCommits = categorizeCommits(commits);
-    console.warn(categorizedCommits);
     const next = determineNextSemver(categorizedCommits);
     const newMarkdown = md.generateUnreleasedMd(next.version, commits);
     md.update(newMarkdown);

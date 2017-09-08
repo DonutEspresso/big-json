@@ -1,6 +1,6 @@
 {
   "name": "big-json",
-  "version": "0.0.0",
+  "version": "1.0.0",
   "main": "lib/index.js",
   "description": "A stream based implementation of JSON.parse and JSON.stringify for big POJOs",
   "homepage": "https://github.com/DonutEspresso/big-json",
