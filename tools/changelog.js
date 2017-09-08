@@ -539,6 +539,14 @@ function determineNextSemver(categorizedCommits) {
     // get last version from git, split so we can increment
     const lastReleasedVersion = git.getLastReleasedVersion();
 
+    // if undefined, this is the first release ever.
+    if (lastReleasedVersion === 'undefined') {
+        return {
+            version: 1,
+            type: 'major'
+        };
+    }
+
     // if we have breaking commits, rev major version
     if (breaking && breaking.length >= 1) {
         return {
@@ -586,7 +594,7 @@ if (ACTION === 'generate') {
 
     // rev package.json
     execSync('npm version ' + next.type + ' --no-git-tag-version');
-    // do git commands and commit
+    // // do git commands and commit
     execSync('git add .');
     execSync('git commit -m ' + next.version);
     execSync('git tag v' + next.version);
