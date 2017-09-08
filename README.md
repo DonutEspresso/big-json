@@ -121,4 +121,4 @@ make codestyle-fix
 
 Copyright (c) 2017 Alex Liu
 
-Licensed under the BSD license.
+Licensed under the MIT license.
