@@ -205,8 +205,8 @@ const git = {
      */
     getNewCommits(callback) {
 
-        // this is usually run after `npm version {rev}`, so we actually want tag
-        // from previous release.
+        // this is usually run after `npm version {rev}`, so we actually want
+        // tag from previous release.
         const allTags = git.getVersions();
         // tags are in reverse chronological order
         const lastTag = allTags.length >= 1 ? allTags[0] : null;
@@ -323,7 +323,8 @@ const md = {
     },
 
     /**
-     * update local value of changelog contents, write passed in string to disk.
+     * update local value of changelog contents, write passed in string to
+     * disk.
      * @private
      * @function write
      * @param {String} str new contents of changelog
@@ -348,15 +349,15 @@ const md = {
 
         return sections.map(function(version) {
             // split each section header off from the rest of the section by
-            // splitting on the first whitespace/newline so we can capture only the
-            // header, which is the version.
+            // splitting on the first whitespace/newline so we can capture only
+            // the header, which is the version.
             return version.split(/\s/)[0];
         });
     },
 
     /**
-     * parse the changelog, return an array of markdown where each element in the
-     * array is a version/release in the changelog.
+     * parse the changelog, return an array of markdown where each element in
+     * the array is a version/release in the changelog.
      * @function splitByVersions
      * @return {Array} an array of markdown strings
      */
