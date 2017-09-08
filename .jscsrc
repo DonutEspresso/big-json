@@ -15,7 +15,6 @@
     // alignment rules
     "maximumLineLength": {
         "value": 80,
-        "allowComments": true,
         "allowUrlComments": true,
         "allowRegex": true
     },
