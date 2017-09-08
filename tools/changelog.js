@@ -367,7 +367,9 @@ const md = {
 
         // remove leading header, since we split by newline, so the very first
         // section may will have extra ## characters
-        versions[0] = versions[0].replace(MD_RELEASE_HEADER, '');
+        if (versions.length > 0) {
+            versions[0] = versions[0].replace(MD_RELEASE_HEADER, '');
+        }
 
         return versions;
     },
@@ -418,7 +420,8 @@ const md = {
         // see what the first section is - if it matches the current unreleased
         // version, get rid of it. otherwise, assume it is from a proper
         // previous release, in which case we can safely move on.
-        if (versions[0].indexOf(STR_UNRELEASED_HEADER) === 0) {
+        if (versions.length > 0 &&
+            versions[0].indexOf(STR_UNRELEASED_HEADER) === 0) {
             versions = versions.slice(1);
         }
 
@@ -540,9 +543,9 @@ function determineNextSemver(categorizedCommits) {
     const lastReleasedVersion = git.getLastReleasedVersion();
 
     // if undefined, this is the first release ever.
-    if (lastReleasedVersion === 'undefined') {
+    if (typeof lastReleasedVersion === 'undefined') {
         return {
-            version: 1,
+            version: '1.0.0',
             type: 'major'
         };
     }
@@ -594,7 +597,7 @@ if (ACTION === 'generate') {
 
     // rev package.json
     execSync('npm version ' + next.type + ' --no-git-tag-version');
-    // // do git commands and commit
+    // do git commands and commit
     execSync('git add .');
     execSync('git commit -m ' + next.version);
     execSync('git tag v' + next.version);
