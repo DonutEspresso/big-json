@@ -536,9 +536,9 @@ function categorizeCommits(rawCommits) {
  */
 function determineNextSemver(categorizedCommits) {
 
-    const breaking = categorizedCommits.breaking;
-    const newFeatures = categorizedCommits.new;
-    const updates = categorizedCommits.update;
+    const breaking = categorizedCommits.Breaking;
+    const newFeatures = categorizedCommits.New;
+    const updates = categorizedCommits.Update;
     // get last version from git, split so we can increment
     const lastReleasedVersion = git.getLastReleasedVersion();
 
