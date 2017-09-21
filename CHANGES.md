@@ -1,3 +1,13 @@
+## 1.1.0
+
+#### Chore
+
+* fix changelog bug with versioning ([aa23d6b](https://github.com/DonutEspresso/big-json/commit/aa23d6b0cc70c4032625bac0bc6b0880cf603f97))
+
+#### New
+
+* add support for multibyte chars (#2) ([ec4bb36](https://github.com/DonutEspresso/big-json/commit/ec4bb3661ecde84c2d214e4b8d24a4f9725d8722))
+
 ## 1.0.0
 
 #### Chore
