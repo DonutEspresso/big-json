@@ -197,7 +197,6 @@ describe('big-json', function() {
 
 
         it('should handle multibyte keys and vals', function(done) {
-
             const multiByte = through2.obj(function(chunk, enc, cb) {
                 this.push(chunk);
                 return cb();
@@ -226,6 +225,41 @@ describe('big-json', function() {
                                      0xe4, 0xba, 0x8b ]));
             multiByte.write(Buffer([ 0xe4, 0xbb, 0xb6 ]));
             multiByte.end('"}');
+        });
+
+
+        it('should not handle multibyte', function(done) {
+            const multiByte = through2.obj(function(chunk, enc, cb) {
+                this.push(chunk);
+                return cb();
+            });
+
+            const parseStream = json.createParseStream({
+                multibyte: false
+            });
+
+            parseStream.on('data', function(pojo) {
+                assert.deepEqual(pojo, {
+                    // jscs:disable
+                    "���": "���遠������的事件"
+                    // jscs:enable
+                });
+                return done();
+            });
+
+            multiByte.pipe(parseStream);
+            multiByte.write('{ "');
+            multiByte.write(Buffer([ 0xe9, 0x81 ]));
+            multiByte.write(Buffer([ 0x99 ]));
+            multiByte.write('":"');
+            multiByte.write(Buffer([ 0xe9, 0x81 ]));
+            multiByte.write(Buffer([ 0x99, 0xe9, 0x81, 0xa0, 0xe6 ]));
+            multiByte.write(Buffer([ 0x9c, 0xaa, 0xe4, 0xbe ]));
+            multiByte.write(Buffer([ 0x86, 0xe7, 0x9a, 0x84,
+                                     0xe4, 0xba, 0x8b ]));
+            multiByte.write(Buffer([ 0xe4, 0xbb, 0xb6 ]));
+            multiByte.end('"}');
+
         });
     });
 });
