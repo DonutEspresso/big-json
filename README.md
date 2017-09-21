@@ -84,7 +84,10 @@ compatibility, use the Node.js streams `pipe()` method.
 
 ## API
 
-### createParseStream()
+### createParseStream(opts)
+
+* `opts` {Object} an options object
+* `opts.multibyte` {Boolean} handle multibyte chars, defaults to true
 
 __Returns__: {Stream} a JSON.parse stream
 
