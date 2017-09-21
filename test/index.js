@@ -196,7 +196,7 @@ describe('big-json', function() {
         });
 
 
-        it('should handle multibyte', function(done) {
+        it('should handle multibyte keys and vals', function(done) {
 
             const multiByte = through2.obj(function(chunk, enc, cb) {
                 this.push(chunk);
@@ -209,13 +209,16 @@ describe('big-json', function() {
 
             parseStream.on('data', function(pojo) {
                 assert.deepEqual(pojo, {
-                    chars: '遙遠未來的事件'
+                    '遙': '遙遠未來的事件'
                 });
                 return done();
             });
 
             multiByte.pipe(parseStream);
-            multiByte.write('{ "chars": "');
+            multiByte.write('{ "');
+            multiByte.write(Buffer([ 0xe9, 0x81 ]));
+            multiByte.write(Buffer([ 0x99 ]));
+            multiByte.write('":"');
             multiByte.write(Buffer([ 0xe9, 0x81 ]));
             multiByte.write(Buffer([ 0x99, 0xe9, 0x81, 0xa0, 0xe6 ]));
             multiByte.write(Buffer([ 0x9c, 0xaa, 0xe4, 0xbe ]));
