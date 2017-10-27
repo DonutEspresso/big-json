@@ -18,7 +18,7 @@ continuous flowing data.
 This module hopes to fill a gap in the ecosystem: parsing large JSON objects
 that are just _really_ big objects. With large in-memory objects, it is
 possible to run up against the V8 string length limitation, which is currently
-(as of 9/2017) 268435440 characters. Thus, if your large object has enough keys
+(as of 9/2017) limited to 512MB. Thus, if your large object has enough keys
 or values, it is possible to exceed the string length limit when calling
 [JSON.stringify](https://github.com/nodejs/node/issues/10738).
 
@@ -97,6 +97,26 @@ __Returns__: {Stream} a JSON.parse stream
 * `opts.body` {Object | Array} an object or array to JSON.stringify
 
 __Returns__: {Stream} a JSON.stringify stream
+
+### parse(opts, callback)
+An async JSON.parse using the same underlying stream implementation, but with
+a callback interface.
+
+* `opts` {Object} an options object passed to `createParseStream`
+* `opts.body` {Object} the string to be parsed
+* `callback` {Function} a callback object
+
+__Returns__: {Object} the parsed object
+
+### stringify(opts, callback)
+An async JSON.stringify using the same underlying stream implementation, but
+with a callback interface.
+
+* `opts` {Object} an options object passed to `createStringifyStream`
+* `opts.body` {Object} the object to be stringified
+* `callback` {Function} a callback object
+
+__Returns__: {Object} the stringified object
 
 ## Contributing
 
