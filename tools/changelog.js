@@ -178,7 +178,7 @@ const git = {
 
         if (opts && opts.trimVPrefix === true) {
             versions = versions.map(function(version) {
-                return version.split('v')[1];
+                return version.split('v')[1] || version;
             });
         }
 
@@ -535,7 +535,6 @@ function categorizeCommits(rawCommits) {
  * @return {String}
  */
 function determineNextSemver(categorizedCommits) {
-
     const breaking = categorizedCommits.Breaking;
     const newFeatures = categorizedCommits.New;
     const updates = categorizedCommits.Update;
