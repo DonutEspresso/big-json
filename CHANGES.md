@@ -1,3 +1,14 @@
+## 1.2.0
+
+#### Chore
+
+* minor changelog script fix ([a17a035](https://github.com/DonutEspresso/big-json/commit/a17a035e62d6d449a7ed69f59758dfa7425063d5))
+* update changelog script ([73980ad](https://github.com/DonutEspresso/big-json/commit/73980adb898a8de4fc5a9d4ba5e5aff84420b3c7))
+
+#### New
+
+* add callback style APIs (#4) ([a12598f](https://github.com/DonutEspresso/big-json/commit/a12598fbfc70307427c9b34e3e05ccce59553919))
+
 ## 1.1.0
 
 #### Chore
