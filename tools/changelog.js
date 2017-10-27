@@ -223,7 +223,7 @@ const git = {
         // commits will be ordered in reverse chronological order, with lowest
         // index being newest. trim empty new lines, then trim the last commit
         // was the last release.
-        const lines = trim(stdout.split('\n')).slice(0, -1);
+        const lines = trim(stdout.split('\n'));
         const rawCommits = [];
 
         lines.forEach(function(line) {
