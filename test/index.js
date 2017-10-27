@@ -262,4 +262,40 @@ describe('big-json', function() {
 
         });
     });
+
+
+    describe('async JSON', function() {
+        it('should stringify async', function(done) {
+            json.stringify({
+                body: POJO
+            }, function(err, stringified) {
+                assert.ifError(err);
+                assert.deepEqual(stringified, JSON.stringify(POJO));
+                return done();
+            });
+        });
+
+
+        it('should parse async', function(done) {
+            json.parse({
+                body: JSON.stringify(POJO)
+            }, function(err, pojo) {
+                assert.ifError(err);
+                assert.deepEqual(pojo, POJO);
+                return done();
+            });
+        });
+
+
+        it('should return err in parse async', function(done) {
+            json.parse({
+                body: fs.readFileSync(
+                    path.join(__dirname, './etc/corrupt.json')
+                ).toString()
+            }, function(err, pojo) {
+                assert.ok(err);
+                return done();
+            });
+        });
+    });
 });
