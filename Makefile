@@ -114,7 +114,7 @@ prepush: $(NODE_MODULES) lint codestyle coverage nsp ## Git pre-push hook task. 
 
 .PHONY: test
 test: $(NODE_MODULES) $(MOCHA) ## Run unit tests.
-	@$(MOCHA) -R spec --full-trace --no-exit $(TEST_FILES)
+	@$(MOCHA) -R spec --full-trace $(TEST_FILES)
 
 
 .PHONY: coverage
