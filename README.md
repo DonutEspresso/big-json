@@ -36,8 +36,8 @@ The major caveat is that the reconstructed POJO must be able to fit in memory.
 If the reconstructed POJO cannot be stored in memory, then it may be time to
 reconsider the way these large objects are being transported and processed.
 
-This module currently uses [stream-json](https://github.com/uhop/stream-json/)
-for parsing, and
+This module currently uses
+[JSONStream](https://github.com/dominictarr/JSONStream) for parsing, and
 [json-stream-stringify](https://github.com/Faleij/json-stream-stringify) for
 stringification.
 
@@ -77,17 +77,10 @@ stringifyStream.on('data', function(strChunk) {
 });
 ```
 
-IMPORTANT: Due to limitations in the implementation, directly calling
-`write()` on the streams may cause unexpected behavior. For maximum
-compatibility, use the Node.js streams `pipe()` method.
-
 
 ## API
 
-### createParseStream(opts)
-
-* `opts` {Object} an options object
-* `opts.multibyte` {Boolean} handle multibyte chars, defaults to true
+### createParseStream()
 
 __Returns__: {Stream} a JSON.parse stream
 
@@ -102,8 +95,8 @@ __Returns__: {Stream} a JSON.stringify stream
 An async JSON.parse using the same underlying stream implementation, but with
 a callback interface.
 
-* `opts` {Object} an options object passed to `createParseStream`
-* `opts.body` {Object} the string to be parsed
+* `opts` {Object} an options object
+* `opts.body` {String} the string to be parsed
 * `callback` {Function} a callback object
 
 __Returns__: {Object} the parsed object
@@ -112,7 +105,7 @@ __Returns__: {Object} the parsed object
 An async JSON.stringify using the same underlying stream implementation, but
 with a callback interface.
 
-* `opts` {Object} an options object passed to `createStringifyStream`
+* `opts` {Object} an options object
 * `opts.body` {Object} the object to be stringified
 * `callback` {Function} a callback object
 
