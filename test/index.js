@@ -189,8 +189,7 @@ describe('big-json', function() {
             parseStream.on('error', function(err) {
                 assert.ok(err);
                 assert.equal(err.name, 'Error');
-                assert.equal(err.message, 'Invalid JSON (Unexpected "\\n" ' +
-                    'at position 27 in state STOP)');
+                assert.include(err.message, 'Invalid JSON');
                 return done();
             });
 
