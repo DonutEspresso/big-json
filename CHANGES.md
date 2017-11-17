@@ -1,3 +1,13 @@
+## 2.0.0
+
+#### Breaking
+
+* move to JSONStream. remove multibyte option (#6) ([43344be](https://github.com/DonutEspresso/big-json/commit/43344be1fd0f0adf6864b2e1faeba09ac3ede82d))
+
+#### Upgrade
+
+* rev dev dependencies (#5) ([58aaa92](https://github.com/DonutEspresso/big-json/commit/58aaa927b36c7f9577171293e16befdd18631e1f))
+
 ## 1.2.0
 
 #### Chore
