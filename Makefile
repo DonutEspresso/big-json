@@ -37,7 +37,7 @@ CHANGELOG	:= $(TOOLS)/changelog.js
 # Files and globs
 #
 PACKAGE_JSON	:= $(ROOT)/package.json
-SHRINKWRAP	:= $(ROOT)/npm-shrinkwrap.json
+PACKAGE_LOCK	:= $(ROOT)/package-lock.json
 GITHOOKS	:= $(wildcard $(GITHOOKS_SRC)/*)
 LCOV		:= $(COVERAGE)/lcov.info
 ALL_FILES	:= $(shell find $(ROOT) \
@@ -99,13 +99,7 @@ codestyle-fix: $(NODE_MODULES) $(JSCS) $(ALL_FILES) ## Run code style checker wi
 
 .PHONY: nsp
 nsp: $(NODE_MODULES) $(NSP) $(NSP_BADGE) ## Run nsp. Shrinkwraps dependencies, checks for vulnerabilities.
-ifeq ($(wildcard $(SHRINKWRAP)),)
-	@$(NPM) shrinkwrap --dev
 	@($(NSP) check) | $(NSP_BADGE)
-	@rm $(SHRINKWRAP)
-else
-	@($(NSP) check) | $(NSP_BADGE)
-endif
 
 
 .PHONY: prepush
