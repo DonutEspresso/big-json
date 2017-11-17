@@ -195,6 +195,30 @@ describe('big-json', function() {
 
             readStream.pipe(parseStream);
         });
+
+
+        it('should handle multibyte keys and vals', function(done) {
+            const parseStream = json.createParseStream();
+
+            parseStream.on('data', function(pojo) {
+                assert.deepEqual(pojo, {
+                    '遙': '遙遠未來的事件'
+                });
+                return done();
+            });
+
+            parseStream.write('{ "');
+            parseStream.write(Buffer([ 0xe9, 0x81 ]));
+            parseStream.write(Buffer([ 0x99 ]));
+            parseStream.write('":"');
+            parseStream.write(Buffer([ 0xe9, 0x81 ]));
+            parseStream.write(Buffer([ 0x99, 0xe9, 0x81, 0xa0, 0xe6 ]));
+            parseStream.write(Buffer([ 0x9c, 0xaa, 0xe4, 0xbe ]));
+            parseStream.write(Buffer([ 0x86, 0xe7, 0x9a, 0x84,
+                                     0xe4, 0xba, 0x8b ]));
+            parseStream.write(Buffer([ 0xe4, 0xbb, 0xb6 ]));
+            parseStream.end('"}');
+        });
     });
 
 
