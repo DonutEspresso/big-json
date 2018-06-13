@@ -4,32 +4,31 @@
 ROOT_SLASH	:= $(dir $(realpath $(firstword $(MAKEFILE_LIST))))
 ROOT		:= $(patsubst %/,%,$(ROOT_SLASH))
 TEST		:= $(ROOT)/test
-TEST_ETC	:= $(ROOT)/test/etc
 TOOLS		:= $(ROOT)/tools
 GITHOOKS_SRC	:= $(TOOLS)/githooks
 GITHOOKS_DEST	:= $(ROOT)/.git/hooks
 
 
 #
-# Generated Directories
+# Generated Files & Directories
 #
 NODE_MODULES	:= $(ROOT)/node_modules
 NODE_BIN	:= $(NODE_MODULES)/.bin
-COVERAGE	:= $(ROOT)/coverage
+COVERAGE	:= $(ROOT)/.nyc_output
+COVERAGE_RES	:= $(ROOT)/coverage
+YARN_LOCK	:= $(ROOT)/yarn.lock
+PACKAGE_LOCK	:= $(ROOT)/package-lock.json
 
 
 #
 # Tools and binaries
 #
 NPM		:= npm
+YARN		:= yarn
 ESLINT		:= $(NODE_BIN)/eslint
-JSCS		:= $(NODE_BIN)/jscs
 MOCHA		:= $(NODE_BIN)/mocha
-_MOCHA		:= $(NODE_BIN)/_mocha
-ISTANBUL	:= $(NODE_BIN)/istanbul
-NSP		:= $(NODE_BIN)/nsp
+NYC		:= $(NODE_BIN)/nyc
 COVERALLS	:= $(NODE_BIN)/coveralls
-NSP_BADGE	:= $(TOOLS)/nspBadge.js
 CHANGELOG	:= $(TOOLS)/changelog.js
 
 
@@ -37,23 +36,21 @@ CHANGELOG	:= $(TOOLS)/changelog.js
 # Files and globs
 #
 PACKAGE_JSON	:= $(ROOT)/package.json
-PACKAGE_LOCK	:= $(ROOT)/package-lock.json
 GITHOOKS	:= $(wildcard $(GITHOOKS_SRC)/*)
 LCOV		:= $(COVERAGE)/lcov.info
 ALL_FILES	:= $(shell find $(ROOT) \
 			-not \( -path $(NODE_MODULES) -prune \) \
 			-not \( -path $(COVERAGE) -prune \) \
-			-not \( -path $(TEST_ETC) -prune \) \
+			-not \( -path $(COVERAGE_RES) -prune \) \
 			-name '*.js' -type f)
-TEST_FILES	:= $(shell find $(TEST) \
-			-not \( -path $(TEST_ETC) -prune \) \
-			-name '*.js' -type f)
+TEST_FILES	:= $(shell find $(TEST) -name '*.js' -type f)
+
 #
 # Targets
 #
 
 $(NODE_MODULES): $(PACKAGE_JSON) ## Install node_modules
-	@$(NPM) install
+	@$(YARN)
 	@touch $(NODE_MODULES)
 
 
@@ -87,33 +84,24 @@ lint: $(NODE_MODULES) $(ESLINT) $(ALL_FILES) ## Run lint checker (eslint).
 	@$(ESLINT) $(ALL_FILES)
 
 
-.PHONY: codestyle
-codestyle: $(NODE_MODULES) $(JSCS) $(ALL_FILES) ## Run code style checker (jscs).
-	@$(JSCS) $(ALL_FILES)
-
-
-.PHONY: codestyle-fix
-codestyle-fix: $(NODE_MODULES) $(JSCS) $(ALL_FILES) ## Run code style checker with auto whitespace fixing (jscs).
-	@$(JSCS) $(ALL_FILES) --fix
-
-
-.PHONY: nsp
-nsp: $(NODE_MODULES) $(NSP) $(NSP_BADGE) ## Run nsp. Shrinkwraps dependencies, checks for vulnerabilities.
-	@($(NSP) check) | $(NSP_BADGE)
+.PHONY: security
+security: $(NODE_MODULES) ## Check for dependency vulnerabilities.
+	@$(NPM) install --package-lock-only
+	@$(NPM) audit
 
 
 .PHONY: prepush
-prepush: $(NODE_MODULES) lint codestyle coverage nsp ## Git pre-push hook task. Run before committing and pushing.
+prepush: $(NODE_MODULES) lint coverage security ## Git pre-push hook task. Run before committing and pushing.
 
 
 .PHONY: test
 test: $(NODE_MODULES) $(MOCHA) ## Run unit tests.
-	@$(MOCHA) -R spec --full-trace $(TEST_FILES)
+	@$(MOCHA) -R spec --full-trace --no-exit --no-timeouts $(TEST_FILES)
 
 
 .PHONY: coverage
-coverage: $(NODE_MODULES) $(ISTANBUL) $(_MOCHA) $(COVERAGE_BADGE) ## Run unit tests with coverage reporting. Generates reports into /coverage.
-	@$(ISTANBUL) cover $(_MOCHA) --report lcovonly -- -R spec $(TEST_FILES)
+coverage: $(NODE_MODULES) $(ISTANBUL) $(COVERAGE_BADGE) ## Run unit tests with coverage reporting. Generates reports into /coverage.
+	@$(NYC) --report=json-summary --report=html make test
 
 
 .PHONY: report-coverage ## Report unit test coverage to coveralls
@@ -123,8 +111,7 @@ report-coverage: coverage
 
 .PHONY: clean
 clean: ## Cleans unit test coverage files and node_modules.
-	@rm -rf $(NODE_MODULES)
-	@rm -rf $(COVERAGE)
+	@rm -rf $(NODE_MODULES) $(COVERAGE) $(COVERAGE_RES) $(YARN_LOCK) $(PACKAGE_LOCK)
 
 
 #
