@@ -1,3 +1,13 @@
+## 2.0.1
+
+#### Chore
+
+* update dev deps. move to nyc (#8) ([0fb40b1](https://github.com/DonutEspresso/big-json/commit/0fb40b10e52d10c8fde671a4eafe88119414a329))
+
+#### Upgrade
+
+* swap mississippi for through2 (#9) ([6b95783](https://github.com/DonutEspresso/big-json/commit/6b9578329e285a30538a9c75b90a3e3e6c2e2dd4))
+
 ## 2.0.0
 
 #### Breaking
