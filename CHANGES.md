@@ -1,3 +1,9 @@
+## 2.0.2
+
+#### Fix
+
+* json-stream-stringify@1.6.1 to support noDecycle (#10) ([7971ad1](https://github.com/DonutEspresso/big-json/commit/7971ad1e02d64e549a030eb1b6de84bd4e8c1232))
+
 ## 2.0.1
 
 #### Chore
