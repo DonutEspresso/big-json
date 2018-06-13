@@ -5,8 +5,6 @@
 [![Coverage Status](https://coveralls.io/repos/github/DonutEspresso/big-json/badge.svg?branch=master)](https://coveralls.io/github/DonutEspresso/big-json?branch=master)
 [![Dependency Status](https://david-dm.org/DonutEspresso/big-json.svg)](https://david-dm.org/DonutEspresso/big-json)
 [![devDependency Status](https://david-dm.org/DonutEspresso/big-json/dev-status.svg)](https://david-dm.org/DonutEspresso/big-json#info=devDependencies)
-[![bitHound Overall Score](https://www.bithound.io/github/DonutEspresso/big-json/badges/score.svg)](https://www.bithound.io/github/DonutEspresso/big-json)
-[![nsp status](https://img.shields.io/badge/NSP%20status-no%20vulnerabilities-green.svg)](https://travis-ci.org/DonutEspresso/big-json)
 
 > A stream based implementation of JSON.parse and JSON.stringify for big POJOs
 

@@ -10,6 +10,8 @@ Thumbs.db
 
 /node_modules/
 npm-debug.log
+yarn.lock
+package-lock.json
 
 # VIM viles #
 #############
@@ -23,3 +25,4 @@ Session.vim
 # Unit Test Coverage #
 ######################
 coverage/
+.nyc_output/
