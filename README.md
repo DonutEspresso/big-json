@@ -125,14 +125,8 @@ Before committing, lint and test your code using the included Makefile:
 make prepush
 ```
 
-If you have style errors, you can auto fix whitespace issues by running:
-
-```sh
-make codestyle-fix
-```
-
 ## License
 
-Copyright (c) 2017 Alex Liu
+Copyright (c) 2018 Alex Liu
 
 Licensed under the MIT license.
