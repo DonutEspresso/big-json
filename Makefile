@@ -101,12 +101,12 @@ test: $(NODE_MODULES) $(MOCHA) ## Run unit tests.
 
 .PHONY: coverage
 coverage: $(NODE_MODULES) $(ISTANBUL) $(COVERAGE_BADGE) ## Run unit tests with coverage reporting. Generates reports into /coverage.
-	@$(NYC) --report=json-summary --report=html make test
+	@$(NYC) --reporter=html --reporter=text make test
 
 
 .PHONY: report-coverage ## Report unit test coverage to coveralls
 report-coverage: coverage
-	@cat $(LCOV) | $(COVERALLS)
+	@$(NYC) report --reporter=text-lcov make test | $(COVERALLS)
 
 
 .PHONY: clean
