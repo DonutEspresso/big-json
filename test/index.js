@@ -50,6 +50,25 @@ describe('big-json', function() {
 
             stringifyStream.pipe(passthrough);
         });
+
+
+        it('should serialize repeated references', function(done) {
+            const foo = { foo: 'a' };
+            const body = [ foo, foo ];
+            const stringifyStream = json.createStringifyStream({
+                body
+            });
+            let stringified = '';
+
+            stringifyStream.on('data', function(chunk) {
+                stringified += chunk;
+            });
+
+            stringifyStream.on('end', function() {
+                assert.deepEqual(stringified, JSON.stringify(body));
+                return done();
+            });
+        });
     });
 
 
