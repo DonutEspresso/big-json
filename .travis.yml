@@ -1,9 +1,9 @@
+cache:
+   npm: false
 language: node_js
 node_js:
-    - "6"
     - "lts/*"                # Active LTS release
     - "node"                 # Latest stable release
 before_install: 'make clean'
-install: 'make'
 script: 'make coverage'
 after_success: 'make report-coverage'
