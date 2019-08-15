@@ -116,7 +116,7 @@ security: $(NODE_MODULES) ## Check for dependency vulnerabilities.
 
 
 .PHONY: prepush
-prepush: $(NODE_MODULES) lint coverage ## Git pre-push hook task. Run before committing and pushing.
+prepush: $(NODE_MODULES) lint coverage docs ## Git pre-push hook task. Run before committing and pushing.
 
 
 .PHONY: test
