@@ -14,12 +14,8 @@ const json = require('../lib');
 const POJO = require('./etc/small.json');
 const STRINGIFIED_POJO = JSON.stringify(POJO);
 
-
 describe('big-json', function() {
-
-
     describe('createStringifyStream', function() {
-
         it('should create a stringify stream', function(done) {
             const stringifyStream = json.createStringifyStream({
                 body: POJO
@@ -30,7 +26,6 @@ describe('big-json', function() {
 
             return done();
         });
-
 
         it('should emit JSON string on data event', function(done) {
             const stringifyStream = json.createStringifyStream({
@@ -51,10 +46,9 @@ describe('big-json', function() {
             stringifyStream.pipe(passthrough);
         });
 
-
         it('should serialize repeated references', function(done) {
             const foo = { foo: 'a' };
-            const body = [ foo, foo ];
+            const body = [foo, foo];
             const stringifyStream = json.createStringifyStream({
                 body
             });
@@ -71,9 +65,7 @@ describe('big-json', function() {
         });
     });
 
-
     describe('createParseStream', function() {
-
         it('should create a parse stream', function(done) {
             const parseStream = json.createParseStream();
 
@@ -82,7 +74,6 @@ describe('big-json', function() {
 
             return done();
         });
-
 
         it('should allow writing to parse stream', function(done) {
             const parseStream = json.createParseStream();
@@ -103,9 +94,7 @@ describe('big-json', function() {
             parseStream.end(STRINGIFIED_POJO);
         });
 
-
-        it('should emit "data" with reconstructed POJO and "end"',
-        function(done) {
+        it('should emit "data" with reconstructed POJO and "end"', function(done) {
             const readStream = fs.createReadStream(
                 path.join(__dirname, './etc/small.json')
             );
@@ -124,7 +113,6 @@ describe('big-json', function() {
 
             readStream.pipe(parseStream);
         });
-
 
         it('should pipe to subsequent streams', function(done) {
             const readStream = fs.createReadStream(
@@ -149,7 +137,6 @@ describe('big-json', function() {
 
             readStream.pipe(parseStream).pipe(afterStream);
         });
-
 
         it('should pipe to multiple output streams', function(done) {
             const readStream = fs.createReadStream(
@@ -198,7 +185,6 @@ describe('big-json', function() {
             parseStream.pipe(afterStream2);
         });
 
-
         it('should emit "error" event when parsing bad JSON', function(done) {
             const readStream = fs.createReadStream(
                 path.join(__dirname, './etc/corrupt.json')
@@ -215,64 +201,72 @@ describe('big-json', function() {
             readStream.pipe(parseStream);
         });
 
-
         it('should handle multibyte keys and vals', function(done) {
             const parseStream = json.createParseStream();
 
             parseStream.on('data', function(pojo) {
                 assert.deepEqual(pojo, {
-                    '遙': '遙遠未來的事件'
+                    遙: '遙遠未來的事件'
                 });
                 return done();
             });
 
             parseStream.write('{ "');
-            parseStream.write(Buffer([ 0xe9, 0x81 ]));
-            parseStream.write(Buffer([ 0x99 ]));
+            parseStream.write(Buffer([0xe9, 0x81]));
+            parseStream.write(Buffer([0x99]));
             parseStream.write('":"');
-            parseStream.write(Buffer([ 0xe9, 0x81 ]));
-            parseStream.write(Buffer([ 0x99, 0xe9, 0x81, 0xa0, 0xe6 ]));
-            parseStream.write(Buffer([ 0x9c, 0xaa, 0xe4, 0xbe ]));
-            parseStream.write(Buffer([ 0x86, 0xe7, 0x9a, 0x84,
-                                     0xe4, 0xba, 0x8b ]));
-            parseStream.write(Buffer([ 0xe4, 0xbb, 0xb6 ]));
+            parseStream.write(Buffer([0xe9, 0x81]));
+            parseStream.write(Buffer([0x99, 0xe9, 0x81, 0xa0, 0xe6]));
+            parseStream.write(Buffer([0x9c, 0xaa, 0xe4, 0xbe]));
+            parseStream.write(
+                Buffer([0x86, 0xe7, 0x9a, 0x84, 0xe4, 0xba, 0x8b])
+            );
+            parseStream.write(Buffer([0xe4, 0xbb, 0xb6]));
             parseStream.end('"}');
         });
     });
 
-
     describe('async JSON', function() {
         it('should stringify async', function(done) {
-            json.stringify({
-                body: POJO
-            }, function(err, stringified) {
-                assert.ifError(err);
-                assert.deepEqual(stringified, JSON.stringify(POJO));
-                return done();
-            });
+            json.stringify(
+                {
+                    body: POJO
+                },
+                function(err, stringified) {
+                    assert.ifError(err);
+                    assert.deepEqual(stringified, JSON.stringify(POJO));
+                    return done();
+                }
+            );
         });
-
 
         it('should parse async', function(done) {
-            json.parse({
-                body: JSON.stringify(POJO)
-            }, function(err, pojo) {
-                assert.ifError(err);
-                assert.deepEqual(pojo, POJO);
-                return done();
-            });
+            json.parse(
+                {
+                    body: JSON.stringify(POJO)
+                },
+                function(err, pojo) {
+                    assert.ifError(err);
+                    assert.deepEqual(pojo, POJO);
+                    return done();
+                }
+            );
         });
 
-
         it('should return err in parse async', function(done) {
-            json.parse({
-                body: fs.readFileSync(
-                    path.join(__dirname, './etc/corrupt.json')
-                ).toString()
-            }, function(err, pojo) {
-                assert.ok(err);
-                return done();
-            });
+            json.parse(
+                {
+                    body: fs
+                        .readFileSync(
+                            path.join(__dirname, './etc/corrupt.json')
+                        )
+                        .toString()
+                },
+                function(err, pojo) {
+                    assert.ok(err);
+                    return done();
+                }
+            );
         });
     });
 });
