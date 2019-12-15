@@ -89,9 +89,9 @@ __Returns__: {Stream} a JSON.parse stream
 
 __Returns__: {Stream} a JSON.stringify stream
 
-### parse(opts, callback)
-An async JSON.parse using the same underlying stream implementation, but with
-a callback interface.
+### parse(opts, [callback])
+An async JSON.parse using the same underlying stream implementation. If a
+callback is not passed, a promise is returned.
 
 * `opts` {Object} an options object
 * `opts.body` {String} the string to be parsed
@@ -99,9 +99,9 @@ a callback interface.
 
 __Returns__: {Object} the parsed object
 
-### stringify(opts, callback)
-An async JSON.stringify using the same underlying stream implementation, but
-with a callback interface.
+### stringify(opts, [callback])
+An async JSON.stringify using the same underlying stream implementation. If a
+callback is not passed, a promise is returned.
 
 * `opts` {Object} an options object
 * `opts.body` {Object} the object to be stringified
@@ -127,6 +127,6 @@ make prepush
 
 ## License
 
-Copyright (c) 2018 Alex Liu
+Copyright (c) 2019 Alex Liu
 
 Licensed under the MIT license.

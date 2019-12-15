@@ -212,22 +212,22 @@ describe('big-json', function() {
             });
 
             parseStream.write('{ "');
-            parseStream.write(Buffer([0xe9, 0x81]));
-            parseStream.write(Buffer([0x99]));
+            parseStream.write(Buffer.from([0xe9, 0x81]));
+            parseStream.write(Buffer.from([0x99]));
             parseStream.write('":"');
-            parseStream.write(Buffer([0xe9, 0x81]));
-            parseStream.write(Buffer([0x99, 0xe9, 0x81, 0xa0, 0xe6]));
-            parseStream.write(Buffer([0x9c, 0xaa, 0xe4, 0xbe]));
+            parseStream.write(Buffer.from([0xe9, 0x81]));
+            parseStream.write(Buffer.from([0x99, 0xe9, 0x81, 0xa0, 0xe6]));
+            parseStream.write(Buffer.from([0x9c, 0xaa, 0xe4, 0xbe]));
             parseStream.write(
-                Buffer([0x86, 0xe7, 0x9a, 0x84, 0xe4, 0xba, 0x8b])
+                Buffer.from([0x86, 0xe7, 0x9a, 0x84, 0xe4, 0xba, 0x8b])
             );
-            parseStream.write(Buffer([0xe4, 0xbb, 0xb6]));
+            parseStream.write(Buffer.from([0xe4, 0xbb, 0xb6]));
             parseStream.end('"}');
         });
     });
 
     describe('async JSON', function() {
-        it('should stringify async', function(done) {
+        it('should stringify async (callback)', function(done) {
             json.stringify(
                 {
                     body: POJO
@@ -240,7 +240,18 @@ describe('big-json', function() {
             );
         });
 
-        it('should parse async', function(done) {
+        it('should stringify async (promise)', function(done) {
+            json.stringify({
+                body: POJO
+            })
+                .then(function(stringified) {
+                    assert.deepEqual(stringified, JSON.stringify(POJO));
+                    return done();
+                })
+                .catch(done);
+        });
+
+        it('should parse async (callback)', function(done) {
             json.parse(
                 {
                     body: JSON.stringify(POJO)
@@ -253,7 +264,18 @@ describe('big-json', function() {
             );
         });
 
-        it('should return err in parse async', function(done) {
+        it('should parse async (promise)', function(done) {
+            json.parse({
+                body: JSON.stringify(POJO)
+            })
+                .then(function(pojo) {
+                    assert.deepEqual(pojo, POJO);
+                    return done();
+                })
+                .catch(done);
+        });
+
+        it('should return err in parse async (callback)', function(done) {
             json.parse(
                 {
                     body: fs
@@ -264,9 +286,21 @@ describe('big-json', function() {
                 },
                 function(err, pojo) {
                     assert.ok(err);
+                    assert.include(err.message, 'Invalid JSON (Unexpected');
                     return done();
                 }
             );
+        });
+        it('should return err in parse async (promise)', function(done) {
+            json.parse({
+                body: fs
+                    .readFileSync(path.join(__dirname, './etc/corrupt.json'))
+                    .toString()
+            }).catch(function(err) {
+                assert.ok(err);
+                assert.include(err.message, 'Invalid JSON (Unexpected');
+                return done();
+            });
         });
     });
 });
