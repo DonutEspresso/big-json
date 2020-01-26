@@ -291,6 +291,7 @@ describe('big-json', function() {
                 }
             );
         });
+
         it('should return err in parse async (promise)', function(done) {
             json.parse({
                 body: fs
@@ -301,6 +302,17 @@ describe('big-json', function() {
                 assert.include(err.message, 'Invalid JSON (Unexpected');
                 return done();
             });
+        });
+
+        it('should parse (buffer)', function(done) {
+            json.parse({
+                body: Buffer.from(JSON.stringify(POJO))
+            })
+                .then(function(pojo) {
+                    assert.deepEqual(pojo, POJO);
+                    return done();
+                })
+                .catch(done);
         });
     });
 });
