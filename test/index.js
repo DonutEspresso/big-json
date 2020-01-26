@@ -314,5 +314,15 @@ describe('big-json', function() {
                 })
                 .catch(done);
         });
+
+        it('should return err if body is neither string nor buffer', function(done) {
+            json.parse({
+                body: POJO
+            }).catch(function(err) {
+                assert.ok(err);
+                assert.include(err.message, 'opts.body');
+                return done();
+            });
+        });
     });
 });
