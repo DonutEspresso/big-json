@@ -324,5 +324,17 @@ describe('big-json', function() {
                 return done();
             });
         });
+
+        it('should parse root JSON array', function(done) {
+            const input = [{ key: 'value' }, { key: null }];
+            json.parse({
+                body: JSON.stringify(input)
+            })
+                .then(function(pojo) {
+                    assert.deepEqual(pojo, input);
+                    return done();
+                })
+                .catch(done);
+        });
     });
 });
