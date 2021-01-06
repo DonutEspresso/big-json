@@ -328,6 +328,7 @@ describe('big-json', function() {
         it('should parse root JSON array', function(done) {
             const input = [{ key: 'value' }, { key: null }];
             json.parse({
+                isRootArray: true,
                 body: JSON.stringify(input)
             })
                 .then(function(pojo) {

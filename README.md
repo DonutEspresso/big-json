@@ -78,7 +78,9 @@ stringifyStream.on('data', function(strChunk) {
 
 ## API
 
-### createParseStream()
+### createParseStream(isRootArray)
+
+* `isRootArray` {Boolean} if true, stream will parse to Array, otherwise to Object
 
 __Returns__: {Stream} a JSON.parse stream
 
@@ -95,9 +97,10 @@ callback is not passed, a promise is returned.
 
 * `opts` {Object} an options object
 * `opts.body` {String | Buffer} the string or buffer to be parsed
+* `opts.isRootArray` {Boolean} if true, function will return Array
 * `callback` {Function} a callback object
 
-__Returns__: {Object} the parsed object
+__Returns__: {Object | Array} the parsed JSON
 
 ### stringify(opts, [callback])
 An async JSON.stringify using the same underlying stream implementation. If a
