@@ -325,7 +325,51 @@ describe('big-json', function() {
             });
         });
 
-        it('should parse root JSON array', function(done) {
+        it('should parse root JSON Object as Object', function(done) {
+            const input = { 0: { key: 'value' }, 1: { key: null } };
+            json.parse({
+                isRootArray: false,
+                body: JSON.stringify(input)
+            })
+                .then(function(pojo) {
+                    assert.deepEqual(pojo, input);
+                    return done();
+                })
+                .catch(done);
+        });
+
+        it('should parse root JSON Object as Array', function(done) {
+            const input = { 0: { key: 'value' }, 1: { key: null } };
+            const expectedOutput = [{ key: 'value' }, { key: null }];
+            json.parse({
+                isRootArray: true,
+                body: JSON.stringify(input)
+            })
+                .then(function(pojo) {
+                    assert.deepEqual(pojo, expectedOutput);
+                    return done();
+                })
+                .catch(done);
+        });
+
+        it('should parse root JSON Array as Object', function(done) {
+            const input = [{ key: 'value' }, { key: null }];
+            const expectedOutput = {
+                0: { key: 'value' },
+                1: { key: null }
+            };
+            json.parse({
+                isRootArray: false,
+                body: JSON.stringify(input)
+            })
+                .then(function(pojo) {
+                    assert.deepEqual(pojo, expectedOutput);
+                    return done();
+                })
+                .catch(done);
+        });
+
+        it('should parse root JSON Array as Array', function(done) {
             const input = [{ key: 'value' }, { key: null }];
             json.parse({
                 isRootArray: true,
