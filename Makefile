@@ -31,7 +31,6 @@ NYC		:= $(NODE_BIN)/nyc
 PRETTIER	:= $(NODE_BIN)/prettier
 UNLEASH		:= $(NODE_BIN)/unleash
 CONVENTIONAL_RECOMMENDED_BUMP := $(NODE_BIN)/conventional-recommended-bump
-COVERALLS	:= $(NODE_BIN)/coveralls
 
 
 #
@@ -113,9 +112,9 @@ coverage: $(NODE_MODULES) $(NYC) ## Run unit tests with coverage reporting. Gene
 	@$(NYC) --reporter=html --reporter=text make test
 
 
-.PHONY: report-coverage ## Report unit test coverage to coveralls
-report-coverage: $(NODE_MODULES) $(NYC) ## Run unit tests with coverage reporting. Generates reports into /coverage.
-	@$(NYC) report --reporter=text-lcov | $(COVERALLS)
+.PHONY: report-coverage
+report-coverage: $(NODE_MODULES) $(NYC) ## Report unit test coverage to coveralls. used only in CI.
+	@$(NYC) report --reporter=lcov
 
 
 .PHONY: clean
