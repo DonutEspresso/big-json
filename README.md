@@ -78,9 +78,9 @@ stringifyStream.on('data', function(strChunk) {
 
 ## API
 
-### createParseStream(isRootArray)
-
-* `isRootArray` {Boolean} if true, stream will parse to Array, otherwise to Object
+### createParseStream()
+Parses an incoming stream and accumulates it into a POJO. Supports both objects
+and arrays as root objects for stream data.
 
 __Returns__: {Stream} a JSON.parse stream
 
@@ -97,7 +97,6 @@ callback is not passed, a promise is returned.
 
 * `opts` {Object} an options object
 * `opts.body` {String | Buffer} the string or buffer to be parsed
-* `opts.isRootArray` {Boolean} if true, function will return Array
 * `callback` {Function} a callback object
 
 __Returns__: {Object | Array} the parsed JSON

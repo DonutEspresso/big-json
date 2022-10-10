@@ -45,7 +45,7 @@ stream based JSON.parse. async function signature to abstract over streams.
     -   `opts.body` **([String][12] \| [Buffer][13])** string or buffer to parse
 -   `callback` **[Function][14]** a callback function
 
-Returns **[Object][11]** the parsed JSON object
+Returns **([Object][11] \| [Array][15])** the parsed JSON
 
 ## parse
 
@@ -59,7 +59,7 @@ variadic arguments to support both promise and callback based usage.
 -   `callback` **[Function][14]?** a callback function. if empty, returns a
     promise.
 
-Returns **[Object][11]** the parsed JSON object
+Returns **([Object][11] \| [Array][15])** the parsed JSON
 
 ## stringify
 
@@ -101,3 +101,5 @@ Returns **[Object][11]** the parsed JSON object
 [13]: https://nodejs.org/api/buffer.html
 
 [14]: https://developer.mozilla.org/docs/Web/JavaScript/Reference/Statements/function
+
+[15]: https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Array
