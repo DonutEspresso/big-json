@@ -1,10 +1,8 @@
 # big-json
 
 [![NPM Version](https://img.shields.io/npm/v/big-json.svg)](https://npmjs.org/package/big-json)
-[![Build Status](https://travis-ci.org/DonutEspresso/big-json.svg?branch=master)](https://travis-ci.org/DonutEspresso/big-json)
+[![CI](https://github.com/DonutEspresso/big-json/actions/workflows/main.yml/badge.svg)](https://github.com/DonutEspresso/big-json/actions/workflows/main.yml)
 [![Coverage Status](https://coveralls.io/repos/github/DonutEspresso/big-json/badge.svg?branch=master)](https://coveralls.io/github/DonutEspresso/big-json?branch=master)
-[![Dependency Status](https://david-dm.org/DonutEspresso/big-json.svg)](https://david-dm.org/DonutEspresso/big-json)
-[![devDependency Status](https://david-dm.org/DonutEspresso/big-json/dev-status.svg)](https://david-dm.org/DonutEspresso/big-json#info=devDependencies)
 
 > A stream based implementation of JSON.parse and JSON.stringify for big POJOs
 
