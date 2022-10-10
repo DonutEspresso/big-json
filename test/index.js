@@ -304,7 +304,7 @@ describe('big-json', function() {
             });
         });
 
-        it('should parse (buffer)', function(done) {
+        it('should parse buffer (promise)', function(done) {
             json.parse({
                 body: Buffer.from(JSON.stringify(POJO))
             })

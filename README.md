@@ -94,7 +94,7 @@ An async JSON.parse using the same underlying stream implementation. If a
 callback is not passed, a promise is returned.
 
 * `opts` {Object} an options object
-* `opts.body` {String} the string to be parsed
+* `opts.body` {String | Buffer} the string or buffer to be parsed
 * `callback` {Function} a callback object
 
 __Returns__: {Object} the parsed object
