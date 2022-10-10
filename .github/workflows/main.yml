@@ -6,20 +6,24 @@ permissions:
   contents: read
 jobs:
   test:
-    name: Node.js ${{ matrix.node-version }} on ${{ matrix.os }}
+    name: Use Node.js with ${{ matrix.node-version }}
+
     runs-on: ${{ matrix.os }}
     strategy:
       fail-fast: false
       matrix:
-        node-version: [18, 16, 14]
-        os:
-          - ubuntu-latest
+        os: [ubuntu-latest]
+        node-version: [lts/-2, lts/-1, lts/*]
     steps:
       - uses: actions/checkout@v3
-      - name: Use Node.js ${{ matrix.node-version }}
       - uses: actions/setup-node@v3
         with:
           node-version: ${{ matrix.node-version }}
       - run: make clean
-      - run: make test
+      - run: make coverage
       - run: make report-coverage
+
+      - name: Coveralls
+        uses: coverallsapp/github-action@master
+        with:
+          github-token: ${{ secrets.GITHUB_TOKEN }}
