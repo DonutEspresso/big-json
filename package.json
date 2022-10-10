@@ -39,10 +39,10 @@
   },
   "dependencies": {
     "assert-plus": "^1.0.0",
-    "into-stream": "^5.1.0",
-    "json-stream-stringify": "^2.0.1",
+    "into-stream": "^6.0.0",
+    "json-stream-stringify": "^3.0.0",
     "JSONStream": "^1.3.1",
     "once": "^1.4.0",
-    "through2": "^3.0.1"
+    "through2": "^4.0.2"
   }
 }
