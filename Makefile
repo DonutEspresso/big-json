@@ -17,7 +17,6 @@ NODE_MODULES	:= $(ROOT)/node_modules
 NODE_BIN	:= $(NODE_MODULES)/.bin
 COVERAGE	:= $(ROOT)/.nyc_output
 COVERAGE_RES	:= $(ROOT)/coverage
-YARN_LOCK	:= $(ROOT)/yarn.lock
 PACKAGE_LOCK	:= $(ROOT)/package-lock.json
 
 
@@ -26,7 +25,6 @@ PACKAGE_LOCK	:= $(ROOT)/package-lock.json
 #
 DOCUMENT	:= $(NODE_BIN)/documentation
 NPM		:= npm
-YARN		:= yarn
 ESLINT		:= $(NODE_BIN)/eslint
 MOCHA		:= $(NODE_BIN)/mocha
 NYC		:= $(NODE_BIN)/nyc
@@ -55,7 +53,7 @@ TEST_FILES	:= $(shell find $(TEST) -name '*.js' -type f)
 #
 
 $(NODE_MODULES): $(PACKAGE_JSON) ## Install node_modules
-	@$(YARN)
+	@$(NPM) install
 	@touch $(NODE_MODULES)
 
 
@@ -101,20 +99,6 @@ lint-fix: $(NODE_MODULES) $(PRETTIER) $(ALL_FILES) ## Reprint code (prettier, es
 	@$(ESLINT) --fix $(ALL_FILES)
 
 
-.PHONY: security
-security: $(NODE_MODULES) ## Check for dependency vulnerabilities.
-	@# remove lockfile, reinstall to get latest deps and regen lockfile
-	@rm $(YARN_LOCK) || true
-	@$(YARN)
-	@$(YARN) audit || EXIT_CODE=$$?; \
-	if [ $$EXIT_CODE -gt 15 ] ; then \
-		echo "'yarn audit' exited with error code $$EXIT_CODE, critical vulnerabilities found!"; \
-		exit 1; \
-	else \
-		echo "'yarn audit' exited with error code $$EXIT_CODE, no critical vulnerabilities found."; \
-	fi
-
-
 .PHONY: prepush
 prepush: $(NODE_MODULES) lint coverage docs ## Git pre-push hook task. Run before committing and pushing.
 
@@ -136,7 +120,7 @@ report-coverage: $(NODE_MODULES) $(NYC) ## Run unit tests with coverage reportin
 
 .PHONY: clean
 clean: ## Cleans unit test coverage files and node_modules.
-	@rm -rf $(NODE_MODULES) $(COVERAGE) $(COVERAGE_RES) $(YARN_LOCK) $(PACKAGE_LOCK)
+	@rm -rf $(NODE_MODULES) $(COVERAGE) $(COVERAGE_RES) $(PACKAGE_LOCK)
 
 
 #
