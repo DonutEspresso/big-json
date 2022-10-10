@@ -79,6 +79,8 @@ stringifyStream.on('data', function(strChunk) {
 ## API
 
 ### createParseStream()
+Parses an incoming stream and accumulates it into a POJO. Supports both objects
+and arrays as root objects for stream data.
 
 __Returns__: {Stream} a JSON.parse stream
 
@@ -97,7 +99,7 @@ callback is not passed, a promise is returned.
 * `opts.body` {String | Buffer} the string or buffer to be parsed
 * `callback` {Function} a callback object
 
-__Returns__: {Object} the parsed object
+__Returns__: {Object | Array} the parsed JSON
 
 ### stringify(opts, [callback])
 An async JSON.stringify using the same underlying stream implementation. If a

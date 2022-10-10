@@ -211,7 +211,7 @@ describe('big-json', function() {
                 return done();
             });
 
-            parseStream.write('{ "');
+            parseStream.write('{"');
             parseStream.write(Buffer.from([0xe9, 0x81]));
             parseStream.write(Buffer.from([0x99]));
             parseStream.write('":"');
@@ -323,6 +323,60 @@ describe('big-json', function() {
                 assert.include(err.message, 'opts.body');
                 return done();
             });
+        });
+
+        it('should parse root JSON Object as Object', function(done) {
+            const input = { 0: { key: 'value' }, 1: { key: null } };
+            json.parse({
+                body: JSON.stringify(input)
+            })
+                .then(function(pojo) {
+                    assert.deepEqual(pojo, input);
+                    return done();
+                })
+                .catch(done);
+        });
+
+        it('should parse root JSON Array as Array', function(done) {
+            const input = [{ key: 'value' }, { key: null }];
+            json.parse({
+                body: JSON.stringify(input)
+            })
+                .then(function(pojo) {
+                    assert.deepEqual(pojo, input);
+                    return done();
+                })
+                .catch(done);
+        });
+
+        it('should determine correct root object with leading whitespace', function(done) {
+            const parseStream = json.createParseStream();
+
+            parseStream.on('data', function(pojo) {
+                assert.deepEqual(pojo, {
+                    foo: 'bar'
+                });
+                return done();
+            });
+
+            parseStream.write('\n\n    \n');
+            parseStream.write('\n\n    {');
+            parseStream.write('"foo": "bar"');
+            parseStream.end('\n\n    }"');
+        });
+
+        it('should determine correct root array with leading whitespace', function(done) {
+            const parseStream = json.createParseStream();
+
+            parseStream.on('data', function(pojo) {
+                assert.deepEqual(pojo, [0, 1, 2]);
+                return done();
+            });
+
+            parseStream.write('\n\n    \n');
+            parseStream.write('\n\n    [');
+            parseStream.write('0, 1, 2');
+            parseStream.end('\n\n    ]"');
         });
     });
 });
