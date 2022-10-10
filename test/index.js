@@ -291,6 +291,7 @@ describe('big-json', function() {
                 }
             );
         });
+
         it('should return err in parse async (promise)', function(done) {
             json.parse({
                 body: fs
@@ -299,6 +300,27 @@ describe('big-json', function() {
             }).catch(function(err) {
                 assert.ok(err);
                 assert.include(err.message, 'Invalid JSON (Unexpected');
+                return done();
+            });
+        });
+
+        it('should parse buffer (promise)', function(done) {
+            json.parse({
+                body: Buffer.from(JSON.stringify(POJO))
+            })
+                .then(function(pojo) {
+                    assert.deepEqual(pojo, POJO);
+                    return done();
+                })
+                .catch(done);
+        });
+
+        it('should return err if body is neither string nor buffer', function(done) {
+            json.parse({
+                body: POJO
+            }).catch(function(err) {
+                assert.ok(err);
+                assert.include(err.message, 'opts.body');
                 return done();
             });
         });

@@ -42,8 +42,8 @@ stream based JSON.parse. async function signature to abstract over streams.
 ### Parameters
 
 -   `opts` **[Object][11]** options to pass to parse stream
-    -   `opts.body` **[String][12]** string to parse
--   `callback` **[Function][13]** a callback function
+    -   `opts.body` **([String][12] \| [Buffer][13])** string or buffer to parse
+-   `callback` **[Function][14]** a callback function
 
 Returns **[Object][11]** the parsed JSON object
 
@@ -56,7 +56,7 @@ variadic arguments to support both promise and callback based usage.
 
 -   `opts` **[Object][11]** options to pass to parse stream
     -   `opts.body` **[String][12]** string to parse
--   `callback` **[Function][13]?** a callback function. if empty, returns a
+-   `callback` **[Function][14]?** a callback function. if empty, returns a
     promise.
 
 Returns **[Object][11]** the parsed JSON object
@@ -69,7 +69,7 @@ streams. variadic arguments to support both promise and callback based usage.
 ### Parameters
 
 -   `opts` **[Object][11]** options to pass to stringify stream
--   `callback` **[Function][13]?** a callback function. if empty, returns a
+-   `callback` **[Function][14]?** a callback function. if empty, returns a
     promise.
 
 Returns **[Object][11]** the parsed JSON object
@@ -98,4 +98,6 @@ Returns **[Object][11]** the parsed JSON object
 
 [12]: https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/String
 
-[13]: https://developer.mozilla.org/docs/Web/JavaScript/Reference/Statements/function
+[13]: https://nodejs.org/api/buffer.html
+
+[14]: https://developer.mozilla.org/docs/Web/JavaScript/Reference/Statements/function
